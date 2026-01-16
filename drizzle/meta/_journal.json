@@ -15,6 +15,41 @@
       "when": 1768494987690,
       "tag": "0001_happy_sunfire",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1768552279257,
+      "tag": "0002_light_fantastic_four",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1768553158422,
+      "tag": "0003_equal_krista_starr",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1768553369456,
+      "tag": "0004_powerful_fantastic_four",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1768553415374,
+      "tag": "0005_real_ultragirl",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1768553557687,
+      "tag": "0006_cool_la_nuit",
+      "breakpoints": true
     }
   ]
 }

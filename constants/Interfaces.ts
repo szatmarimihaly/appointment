@@ -2,6 +2,7 @@ export interface Company {
     id: string,
     ownerId: string,
     name: string,
+    slug : string | null,
     description: string,
     serviceType: string,
     createdAt: string,

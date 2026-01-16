@@ -1,30 +1,20 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/db";
 import { company } from "@/db/schema";
-import { eq } from "drizzle-orm";
 import { getCurrentUser } from "@/lib/query/getCurrentUser";
-import { nanoid } from "nanoid";
+import { eq } from "drizzle-orm";
 import { slugify } from "@/utils/slugify";
 
 export async function POST(req: Request) {
+
     try{
+        
         const currentUser = await getCurrentUser();
 
         if(!currentUser) {
             return NextResponse.json(
-                { error : "Unauthorized" },
+                { error : "Unathorized" },
                 { status : 401 }
-            );
-        };
-
-        const existingCompany = await db.query.company.findFirst({
-            where: eq(company.ownerId, currentUser.id)
-        })
-
-        if(existingCompany) {
-            return NextResponse.json(
-                { error : "Company already exists." },
-                { status : 400 }
             )
         }
 
@@ -33,27 +23,34 @@ export async function POST(req: Request) {
 
         if(!name || !description || !serviceType) {
             return NextResponse.json(
-                { error : "All fields are required." },
+                { error : "All filds are required." },
                 { status : 400 }
             )
         }
+
         const slug = slugify(name);
 
-        const newCompany = await db.insert(company).values({
-            id : nanoid(),
-            ownerId :  currentUser.id,
-            name, description, serviceType, slug 
-        }).returning();
+        const updateCompany = await db.update(company).set({
+            name: name,
+            slug: slug,
+            description : description,
+            serviceType : serviceType,
+            updatedAt : new Date()
+        }).where(eq(company.ownerId, currentUser.id)).returning();
 
-        return NextResponse.json(
-            { company : newCompany[0] },
-            { status : 201 }
-        );
+        return NextResponse.json({
+            success: true,
+            message: "Company updated successfully",
+            company: updateCompany[0]
+        })
+
     }catch(error : any) {
         console.log(error);
+
         return NextResponse.json(
             { error : "Internal Server Error" },
             { status : 500 }
         )
     }
+
 }

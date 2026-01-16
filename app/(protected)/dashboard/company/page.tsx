@@ -1,3 +1,4 @@
+import UpdateCompany from '@/components/Form/UpdateCompany'
 import CompanyNav from '@/components/Navbar/CompanyNav'
 import PlusIcon from '@/components/ui/PlusIcon'
 import { queryCompany } from '@/lib/query/queryCompany'
@@ -34,7 +35,7 @@ const Page = async () => {
         </header>
 
         <main>
-
+            <UpdateCompany company={userCompany}/>
         </main>
     </>
   )

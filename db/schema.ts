@@ -79,11 +79,15 @@ export const company = pgTable("company", {
   ownerId: text("owner_id").notNull().references(() => user.id, { onDelete : "cascade" }),
   name: text("name").notNull(),
   description: text("description").notNull(),
+  slug : text("slug").unique(),
   serviceType: text("service_type").notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().$onUpdate(() => new Date()) 
 },
-(table) => [index("company_ownerId_idx").on(table.ownerId)],
+(table) => [
+  index("company_ownerId_idx").on(table.ownerId),
+  index("company_slug_idx").on(table.slug)
+  ],
 );
 
 export const companyRelations = relations(company, ({ one }) => ({
