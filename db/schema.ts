@@ -1,4 +1,5 @@
 import { relations } from "drizzle-orm";
+import { decimal, integer } from "drizzle-orm/gel-core";
 import { pgTable, text, timestamp, boolean, index } from "drizzle-orm/pg-core";
 
 export const user = pgTable("user", {
@@ -72,6 +73,25 @@ export const verification = pgTable(
   },
   (table) => [index("verification_identifier_idx").on(table.identifier)],
 );
+
+export const company = pgTable("company", {
+  id: text("id").primaryKey(),
+  ownerId: text("owner_id").notNull().references(() => user.id, { onDelete : "cascade" }),
+  name: text("name").notNull(),
+  description: text("description").notNull(),
+  serviceType: text("service_type").notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().$onUpdate(() => new Date()) 
+},
+(table) => [index("company_ownerId_idx").on(table.ownerId)],
+);
+
+export const companyRelations = relations(company, ({ one }) => ({
+  owner: one(user, {
+    fields: [company.ownerId],
+    references: [user.id]
+  })
+}))
 
 export const userRelations = relations(user, ({ many }) => ({
   sessions: many(session),

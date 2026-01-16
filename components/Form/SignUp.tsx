@@ -36,7 +36,7 @@ export default function SignUp() {
 
             router.push("/dashboard");
         }catch(error : any) {
-            setError(error.message || "Failed to create account. Email may already exist.")
+            setError("Failed to create account. Email may already exist.")
         }finally{
             setLoading(false)
         }
@@ -52,19 +52,22 @@ export default function SignUp() {
                     onSubmit={handleSubmit}
                     className="mt-4 w-full max-w-2xl mx-auto flex flex-col gap-4"
                 >
+                    {error && (
+                        <p className="text-red-800 bg-red-300 text-center rounded py-2">{error}</p>
+                    )}
                     <input 
                         type="text" placeholder="Name" name="name" value={name} onChange={(e) => setName(e.target.value)}
-                        className="border border-inputcolor w-full mx-auto px-4 py-2 rounded focus:outline-none focus:border-2 focus:border-ringcolor text-textgray"
+                        className="border border-inputcolor w-full mx-auto px-4 py-2 rounded focus:outline-none focus:border-2 focus:border-foreground text-textgray"
                     />
 
                     <input 
                         type="email" placeholder="Email" name="email" value={email} onChange={(e) => setEmail(e.target.value)}
-                        className="border border-inputcolor w-full mx-auto px-4 py-2 rounded focus:outline-none focus:border-2 focus:border-ringcolor text-textgray"
+                        className="border border-inputcolor w-full mx-auto px-4 py-2 rounded focus:outline-none focus:border-2 focus:border-foreground text-textgray"
                     />
 
                     <input 
                         type="password" placeholder="Password" name="password" value={password} onChange={(e) => setPassword(e.target.value)}
-                        className="border border-inputcolor w-full mx-auto px-4 py-2 rounded focus:outline-none focus:border-2 focus:border-ringcolor text-textgray"
+                        className="border border-inputcolor w-full mx-auto px-4 py-2 rounded focus:outline-none focus:border-2 focus:border-foreground text-textgray"
                     />
 
                     <button 

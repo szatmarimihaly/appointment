@@ -44,14 +44,17 @@ export default function SignIn(){
                     onSubmit={handleSubmit}
                     className="mt-4 w-full max-w-2xl mx-auto flex flex-col gap-4"
                 >
+                    {error && (
+                        <p className="text-red-800 bg-red-300 text-center rounded">{error}</p>
+                    )}
                     <input 
                         type="email" placeholder="Email" name="email" value={email} onChange={(e) => setEmail(e.target.value)}
-                        className="border border-inputcolor w-full mx-auto px-4 py-2 rounded focus:outline-none focus:border-2 focus:border-ringcolor text-textgray"
+                        className="border border-inputcolor w-full mx-auto px-4 py-2 rounded focus:outline-none focus:border-2 focus:border-foreground text-textgray"
                     />
         
                     <input 
                         type="password" placeholder="Password" name="password" value={password} onChange={(e) => setPassword(e.target.value)}
-                        className="border border-inputcolor w-full mx-auto px-4 py-2 rounded focus:outline-none focus:border-2 focus:border-ringcolor text-textgray"
+                        className="border border-inputcolor w-full mx-auto px-4 py-2 rounded focus:outline-none focus:border-2 focus:border-foreground text-textgray"
                     />
         
                     <button 
