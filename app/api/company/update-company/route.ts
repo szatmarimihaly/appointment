@@ -2,8 +2,9 @@ import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/db";
 import { company } from "@/db/schema";
 import { getCurrentUser } from "@/lib/query/getCurrentUser";
-import { eq } from "drizzle-orm";
+import { eq, and, ne } from "drizzle-orm";
 import { slugify } from "@/utils/slugify";
+import { searchify } from "@/utils/searchify";
 
 export async function POST(req: Request) {
 
@@ -28,13 +29,44 @@ export async function POST(req: Request) {
             )
         }
 
+        const existingCompany = await db.query.company.findFirst({
+            where: eq(company.ownerId, currentUser.id),
+        });
+
+        if (!existingCompany) {
+            return NextResponse.json(
+                { error: "Company not found" },
+                { status: 404 }
+            );
+        }
+
         const slug = slugify(name);
+        const nameSearch = searchify(name);
+        const serviceTypeSearch = searchify(serviceType);
+
+        if (slug !== existingCompany.slug) {
+            const slugConflict = await db.query.company.findFirst({
+                where: and(
+                    eq(company.slug, slug),
+                    ne(company.id, existingCompany.id)
+                ),
+            });
+
+            if (slugConflict) {
+                return NextResponse.json(
+                    { error: "A company with this name already exists" },
+                    { status: 400 }
+                );
+            }
+        }
 
         const updateCompany = await db.update(company).set({
             name: name,
+            nameSearch: nameSearch, 
             slug: slug,
             description : description,
             serviceType : serviceType,
+            serviceTypeSearch: serviceTypeSearch,
             updatedAt : new Date()
         }).where(eq(company.ownerId, currentUser.id)).returning();
 

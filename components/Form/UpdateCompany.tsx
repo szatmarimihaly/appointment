@@ -77,6 +77,25 @@ export default function UpdateCompany({ company } : CompanyDashboardProps) {
                 <h1 className="text-white text-4xl font-bold mb-2 text-center">Your company</h1>
                 <p className="text-textgray mt-4 mb-6">Here you can check out and update your companies info if you want.</p>
 
+                <input 
+                type="file"
+                accept='image/*'
+                onChange={async (e) => {
+                    const file = e.target.files?.[0];
+                    if(!file) return;
+
+                    const formData = new FormData();
+                    formData.append("file", file);
+                    formData.append("companyId", company.id)
+
+                    await fetch("/api/company/upload-logo", {
+                        method: "POST",
+                        headers: { "ContentType" : "application/json" },
+                        body: formData
+                    })
+                }} 
+            />
+
                 <form 
                     onSubmit={handleSubmit}
                     className="mt-10 w-full max-w-2xl mx-auto flex flex-col gap-4"    

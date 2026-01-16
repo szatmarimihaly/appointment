@@ -1,6 +1,5 @@
 import { relations } from "drizzle-orm";
-import { decimal, integer } from "drizzle-orm/gel-core";
-import { pgTable, text, timestamp, boolean, index } from "drizzle-orm/pg-core";
+import { pgTable, text, timestamp, boolean, index, doublePrecision } from "drizzle-orm/pg-core";
 
 export const user = pgTable("user", {
   id: text("id").primaryKey(),
@@ -66,27 +65,30 @@ export const verification = pgTable(
     value: text("value").notNull(),
     expiresAt: timestamp("expires_at").notNull(),
     createdAt: timestamp("created_at").defaultNow().notNull(),
-    updatedAt: timestamp("updated_at")
-      .defaultNow()
-      .$onUpdate(() => /* @__PURE__ */ new Date())
-      .notNull(),
+    updatedAt: timestamp("updated_at").defaultNow().$onUpdate(() => new Date()).notNull(),
   },
   (table) => [index("verification_identifier_idx").on(table.identifier)],
 );
 
 export const company = pgTable("company", {
-  id: text("id").primaryKey(),
+  id: text("id").primaryKey().notNull(),
   ownerId: text("owner_id").notNull().references(() => user.id, { onDelete : "cascade" }),
   name: text("name").notNull(),
+  nameSearch: text("name_search").notNull(),
   description: text("description").notNull(),
-  slug : text("slug").unique(),
+  slug : text("slug").notNull().unique(),
   serviceType: text("service_type").notNull(),
+  serviceTypeSearch: text("service_type_search").notNull(),
+  rating: doublePrecision("rating").default(5.0).notNull(),
+  imageUrl: text("image_url"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
-  updatedAt: timestamp("updated_at").defaultNow().$onUpdate(() => new Date()) 
+  updatedAt: timestamp("updated_at").defaultNow().$onUpdate(() => new Date()).notNull() 
 },
 (table) => [
   index("company_ownerId_idx").on(table.ownerId),
-  index("company_slug_idx").on(table.slug)
+  index("company_slug_idx").on(table.slug),
+  index("company_serviceTypeSearch_idx").on(table.serviceTypeSearch),
+  index("company_nameSearch_idx").on(table.nameSearch)
   ],
 );
 

@@ -1,3 +1,4 @@
+import PurpleBorder from "@/components/Button/PurpleBorder";
 import PurpleButton from "@/components/Button/PurpleButton";
 import DescriptionCard from "@/components/Main/DescriptionCard";
 import MainNav from "@/components/Navbar/MainNav";
@@ -16,7 +17,10 @@ export default function Page(){
 
         <p className="text-textgray text-center text-sm lg:text-md mt-5">The Next Level Booking System is a modern and user-friendly platform that helps companies manage their appointments and bookings efficiently.</p>
 
-        <PurpleButton href="/sign-up" text="Start 3-Day Trial"/>
+        <div className="flex flex-col items-center gap-4 lg:flex-row mt-10">
+          <PurpleButton href="/sign-up" text="Start 3-Day Trial"/>
+          <PurpleBorder href="/search" text="Book appointments"/>
+        </div>
 
         <DescriptionCard/>
       </main>

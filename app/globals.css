@@ -16,6 +16,7 @@
   --textcolor: #d1d5db;
   --textgray: #8f8f8f;
   --inputcolor: #4b5563;
+  --clientcard: #141e36;
 }
 
 @theme inline {
@@ -26,6 +27,7 @@
   --color-textgray: var(--textgray);
   --color-inputcolor: var(--inputcolor);
   --color-cardborder: var(--cardborder);
+  --color-clientcard: var(--clientcard)
 }
 
 @media (prefers-color-scheme: dark) {
@@ -37,6 +39,7 @@
     --textcolor: #d1d5db;
     --textgray: #8f8f8f;
     --inputcolor: #4b5563;
+    --clientcard: #141e36;
   }
 }
 
