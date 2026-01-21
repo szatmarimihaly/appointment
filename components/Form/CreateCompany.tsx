@@ -29,7 +29,7 @@ const CreateCompany = () => {
         try{
             const response = await fetch("/api/company/create-company", {
                 method: "POST",
-                headers : { "ContentType" : "application/json" },
+                headers : { "Content-Type" : "application/json" },
                 body: JSON.stringify(data)
             })
 

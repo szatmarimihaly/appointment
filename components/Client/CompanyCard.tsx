@@ -7,7 +7,7 @@ import { Star } from "lucide-react";
 
 
 
-export function CompanyCard({ id, name, slug, serviceType, rating, imageUrl } : CompanySearchCardProps) {
+export function CompanyCard({ id, name, slug, serviceType, rating, imageUrl, zipCode, address, number, alphabet, city } : CompanySearchCardProps) {
 
     return(
         <Link
@@ -38,7 +38,7 @@ export function CompanyCard({ id, name, slug, serviceType, rating, imageUrl } : 
                 </div>
 
                 {/* Address row */}
-                <p className="text-sm leading-relaxed text-slate-400">Budapest, 1121 Őzike út 28A</p>
+                <p className="text-sm leading-relaxed text-slate-400">{city}, {zipCode} {address} {number}/{alphabet}</p>
             </div>
         </Link>
     )

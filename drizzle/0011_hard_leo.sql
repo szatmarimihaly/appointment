@@ -1,0 +1,2 @@
+ALTER TABLE "services" ADD COLUMN "owner_company_id" text NOT NULL;--> statement-breakpoint
+ALTER TABLE "services" ADD CONSTRAINT "services_owner_company_id_company_id_fk" FOREIGN KEY ("owner_company_id") REFERENCES "public"."company"("id") ON DELETE cascade ON UPDATE no action;

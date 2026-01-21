@@ -9,9 +9,24 @@ export interface Company {
   serviceTypeSearch: string
   rating: number;
   imageUrl: string | null;
+  country : string;
+  city : string;
+  zipCode : string;
+  address : string;
+  number : string;
+  alphabet : string;
+  phone : string;
   createdAt: Date;
   updatedAt: Date;
-}
+};
+
+export interface Services {
+    name: string,
+    description: string,
+    price: number,
+    deviza: string,
+    duration: number
+};
 
 export interface CompanySearchCardProps{
     id: string,
@@ -19,8 +34,29 @@ export interface CompanySearchCardProps{
     slug: string,
     serviceType: string,
     rating: number,
-    imageUrl: string | null
-}
+    imageUrl: string | null,
+    zipCode: string,
+    address: string,
+    city: string,
+    number: string,
+    alphabet: string
+};
+
+export interface CompanyDetailProps{
+    slug : string,
+    name : string,
+    description : string,
+    serviceType : string,
+    rating : number,
+    imageUrl : string | null,
+    country : string,
+    city : string,
+    zipCode : string,
+    address : string,
+    number : string,
+    alphabet : string,
+    phone : string,
+};
 
 export interface CompanyCardProps {
     company: Company

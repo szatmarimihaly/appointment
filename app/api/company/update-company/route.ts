@@ -5,6 +5,7 @@ import { getCurrentUser } from "@/lib/query/getCurrentUser";
 import { eq, and, ne } from "drizzle-orm";
 import { slugify } from "@/utils/slugify";
 import { searchify } from "@/utils/searchify";
+import { revalidateTag } from "next/cache";
 
 export async function POST(req: Request) {
 
@@ -63,12 +64,14 @@ export async function POST(req: Request) {
         const updateCompany = await db.update(company).set({
             name: name,
             nameSearch: nameSearch, 
-            slug: slug,
             description : description,
             serviceType : serviceType,
             serviceTypeSearch: serviceTypeSearch,
             updatedAt : new Date()
         }).where(eq(company.ownerId, currentUser.id)).returning();
+
+
+
 
         return NextResponse.json({
             success: true,

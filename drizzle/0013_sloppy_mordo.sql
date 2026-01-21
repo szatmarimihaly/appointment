@@ -1,0 +1,1 @@
+ALTER TABLE "services" ADD COLUMN "duration" integer DEFAULT 15 NOT NULL;

@@ -1,5 +1,5 @@
 import { relations } from "drizzle-orm";
-import { pgTable, text, timestamp, boolean, index, doublePrecision } from "drizzle-orm/pg-core";
+import { pgTable, text, timestamp, boolean, index, doublePrecision, integer } from "drizzle-orm/pg-core";
 
 export const user = pgTable("user", {
   id: text("id").primaryKey(),
@@ -81,6 +81,13 @@ export const company = pgTable("company", {
   serviceTypeSearch: text("service_type_search").notNull(),
   rating: doublePrecision("rating").default(5.0).notNull(),
   imageUrl: text("image_url"),
+  country : text("country").notNull().default("Magyarország"),
+  city: text("city").notNull().default("No data provided."),
+  zipCode: text("zip_code").notNull().default("No data provided."),
+  address: text("address").notNull().default("No data provided."),
+  number: text("street_number").notNull().default("No data provided."),
+  alphabet: text("house_alphabet").notNull().default("No data provided."),
+  phone: text("phone").notNull().default("No data provided."),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().$onUpdate(() => new Date()).notNull() 
 },
@@ -92,12 +99,37 @@ export const company = pgTable("company", {
   ],
 );
 
+export const services = pgTable("services", {
+  id: text("id").primaryKey().notNull(),
+  ownerId: text("owner_id").notNull().references(() => user.id, { onDelete : "cascade" }),
+  ownerCompanyId: text("owner_company_id").notNull().references(() => company.id,{ onDelete : "cascade" }),
+  name: text("name").notNull(),
+  description: text("description").notNull(),
+  price: doublePrecision("price").notNull(),
+  deviza: text("deviza").notNull().default("HUF"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().$onUpdate(() => new Date()).notNull(),
+  duration: integer("duration").notNull().default(15)
+},
+(table) => [
+  index("services_ownerId_idx").on(table.ownerId),
+  index("services_companyOwner_idx").on(table.ownerCompanyId),
+]
+)
+
 export const companyRelations = relations(company, ({ one }) => ({
   owner: one(user, {
     fields: [company.ownerId],
     references: [user.id]
   })
-}))
+}));
+
+export const servicesRelations = relations(services, ({ one }) => ({
+  owner: one(user, {
+    fields: [services.ownerId],
+    references: [user.id]
+  })
+}));
 
 export const userRelations = relations(user, ({ many }) => ({
   sessions: many(session),

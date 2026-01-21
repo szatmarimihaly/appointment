@@ -39,6 +39,11 @@ export default async function Page ({ searchParams } : SearchProps) {
               serviceType={company.serviceType}
               rating={company.rating}
               imageUrl={company.imageUrl}
+              zipCode={company.zipCode}
+              address={company.address}
+              city={company.city}
+              number={company.number}
+              alphabet={company.alphabet}
             />
           ))}
         </div>

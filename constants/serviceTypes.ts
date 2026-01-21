@@ -4,3 +4,9 @@ export const SERVICE_TYPES = [
 ] as const;
 
 export type ServiceType = (typeof SERVICE_TYPES)[number];
+
+export const DEVIZA_TYPES = [
+    "HUF", "EUR", "USD", "CHF", "CZK"
+] as const;
+
+export type DevizaType = (typeof DEVIZA_TYPES)[number];
