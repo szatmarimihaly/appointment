@@ -10,5 +10,5 @@ export async function getCompanyDetail(slug : string) : Promise<Company | null>{
         where : eq(company.slug, slug) 
     }); 
     
-    return companyDetail || null; 
+    return companyDetail || null;
 }

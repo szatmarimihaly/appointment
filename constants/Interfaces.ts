@@ -18,14 +18,25 @@ export interface Company {
   phone : string;
   createdAt: Date;
   updatedAt: Date;
+  instagramUrl: string | null;
+  websiteUrl: string | null;
 };
 
 export interface Services {
+    id: string,
     name: string,
     description: string,
     price: number,
     deviza: string,
     duration: number
+};
+
+export interface WorkingHours {
+    id: string,
+    companyId: string,
+    weekday: number,
+    startSlot: number,
+    endSlot: number
 };
 
 export interface CompanySearchCardProps{
@@ -56,6 +67,8 @@ export interface CompanyDetailProps{
     number : string,
     alphabet : string,
     phone : string,
+    instagramUrl: string | null
+    websiteUrl: string | null
 };
 
 export interface CompanyCardProps {

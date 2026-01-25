@@ -18,6 +18,8 @@ const ALLOWED_TYPES = [
   "image/svg+xml",
 ];
 
+const MAX_FILE_SIZE = 5*1024*1024; 
+
 export async function POST(req: Request) {
     const user = await getCurrentUser();
 
@@ -42,6 +44,13 @@ export async function POST(req: Request) {
     if (!ALLOWED_TYPES.includes(file.type)) {
         return NextResponse.json({ error: "Unsupported file type" }, { status: 400 });
     };
+
+    if(file.size > MAX_FILE_SIZE) {
+        return NextResponse.json(
+            { error : "File size must be less than 5MB." },
+            { status : 400 }
+        )
+    }
 
     const existingCompany = await db.query.company.findFirst({
         where : eq(company.id, companyId)

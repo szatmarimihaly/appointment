@@ -1,5 +1,5 @@
 import CompanyDetail from "@/components/Client/CompanyDetail";
-import SpinnerWhite from "@/components/ui/SpinnerWhite";
+import SuspenseSpinner from "@/components/ui/Suspense/Spinner";
 import { getCompanyDetail } from "@/lib/query/search/detailView";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
@@ -21,7 +21,7 @@ export default async function Page({ params } : CompanyDetail) {
     return(
 
         <main>
-            <Suspense fallback={<SpinnerWhite/>}>
+            <Suspense fallback={<SuspenseSpinner/>}>
                 <CompanyDetail
                     key={company?.id}
                     slug={company.slug}
@@ -37,6 +37,8 @@ export default async function Page({ params } : CompanyDetail) {
                     number={company.number}
                     alphabet={company.alphabet}
                     phone={company.phone}
+                    instagramUrl={company.instagramUrl}
+                    websiteUrl={company.websiteUrl}
                 />
             </Suspense>
         </main>

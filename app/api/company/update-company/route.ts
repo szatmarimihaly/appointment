@@ -5,7 +5,6 @@ import { getCurrentUser } from "@/lib/query/getCurrentUser";
 import { eq, and, ne } from "drizzle-orm";
 import { slugify } from "@/utils/slugify";
 import { searchify } from "@/utils/searchify";
-import { revalidateTag } from "next/cache";
 
 export async function POST(req: Request) {
 
@@ -21,7 +20,7 @@ export async function POST(req: Request) {
         }
 
         const body = await req.json();
-        const { name, description, serviceType } = body;
+        const { name, description, serviceType, instagramUrl, websiteUrl } = body;
 
         if(!name || !description || !serviceType) {
             return NextResponse.json(
@@ -67,7 +66,9 @@ export async function POST(req: Request) {
             description : description,
             serviceType : serviceType,
             serviceTypeSearch: serviceTypeSearch,
-            updatedAt : new Date()
+            updatedAt : new Date(),
+            instagramUrl: instagramUrl || null,
+            websiteUrl: websiteUrl || null
         }).where(eq(company.ownerId, currentUser.id)).returning();
 
 

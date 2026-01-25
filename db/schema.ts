@@ -1,5 +1,6 @@
 import { relations } from "drizzle-orm";
-import { pgTable, text, timestamp, boolean, index, doublePrecision, integer } from "drizzle-orm/pg-core";
+import { pgTable, text, timestamp, boolean, index, doublePrecision, integer, uniqueIndex, check } from "drizzle-orm/pg-core";
+import { sql } from "drizzle-orm";
 
 export const user = pgTable("user", {
   id: text("id").primaryKey(),
@@ -89,7 +90,9 @@ export const company = pgTable("company", {
   alphabet: text("house_alphabet").notNull().default("No data provided."),
   phone: text("phone").notNull().default("No data provided."),
   createdAt: timestamp("created_at").defaultNow().notNull(),
-  updatedAt: timestamp("updated_at").defaultNow().$onUpdate(() => new Date()).notNull() 
+  updatedAt: timestamp("updated_at").defaultNow().$onUpdate(() => new Date()).notNull(),
+  instagramUrl: text("instagram_url"),
+  websiteUrl: text("website_url")
 },
 (table) => [
   index("company_ownerId_idx").on(table.ownerId),
@@ -109,13 +112,13 @@ export const services = pgTable("services", {
   deviza: text("deviza").notNull().default("HUF"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().$onUpdate(() => new Date()).notNull(),
-  duration: integer("duration").notNull().default(15)
+  duration: integer("duration").notNull().default(10)
 },
 (table) => [
   index("services_ownerId_idx").on(table.ownerId),
   index("services_companyOwner_idx").on(table.ownerCompanyId),
 ]
-)
+);
 
 export const companyRelations = relations(company, ({ one }) => ({
   owner: one(user, {

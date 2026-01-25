@@ -30,9 +30,9 @@ export async function POST(req: Request) {
 
         const body = await req.json();
         console.log("Received body:", body);
-        const { name, description, deviza, price } = body;
+        const { name, description, deviza, price, duration } = body;
 
-        if(!name || !description || !deviza || !price) {
+        if(!name || !description || !deviza || !price || !duration) {
             return NextResponse.json(
                 { error : "All fields required." },
                 { status : 400 }
@@ -40,6 +40,7 @@ export async function POST(req: Request) {
         };
 
         const priceNumber = parseFloat(price);
+        const durationNumber = parseInt(duration);
 
         if (isNaN(priceNumber)) {
             return NextResponse.json(
@@ -48,12 +49,20 @@ export async function POST(req: Request) {
             )
         };
 
+        if(isNaN(durationNumber)) {
+            return NextResponse.json(
+                { error : "Invalid duration format" },
+                { status : 400 }
+            )
+        };
+
         const newService = await db.insert(services).values({
             id: nanoid(),
             ownerId: currentUser.id,
             ownerCompanyId: existingCompany.id,
             price: priceNumber,
-            name, description, deviza
+            name, description, deviza, 
+            duration: durationNumber
         }).returning();
 
         console.log("Service created:", newService[0]);

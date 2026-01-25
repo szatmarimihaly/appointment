@@ -1,0 +1,2 @@
+ALTER TABLE "weekly_working_hours" DROP CONSTRAINT "weekly_working_hours_weekday_check";--> statement-breakpoint
+ALTER TABLE "weekly_working_hours" ADD CONSTRAINT "weekly_working_hours_weekday_check" CHECK ("weekly_working_hours"."start_slot" >= 0 AND "weekly_working_hours"."end_slot" <= 144);

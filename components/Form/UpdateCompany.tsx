@@ -7,6 +7,7 @@ import Link from "next/link";
 import ArrowOutwardOutlinedIcon from '@mui/icons-material/ArrowOutwardOutlined';
 import { SERVICE_TYPES } from "@/constants/serviceTypes";
 import { useRouter } from "next/navigation";
+import ImageUpload from "./ImageUpload";
 
 interface CompanyDashboardProps {
     company : Company;
@@ -14,15 +15,15 @@ interface CompanyDashboardProps {
 
 export default function UpdateCompany({ company } : CompanyDashboardProps) {
 
-    const [name, setName] = useState(company.name);
-    const [description, setDescripiton] = useState(company.description);
-    const [serviceType, setServiceType] = useState(company.serviceType);
+
     const [loading, setLoading] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
     const [formData, setFormData] = useState({
         name : company.name,
         description: company.description,
-        serviceType: company.serviceType 
+        serviceType: company.serviceType,
+        instagramUrl: company.instagramUrl || "",
+        websiteUrl: company.websiteUrl || ""
     })
     const [error, setError] = useState("");
     const router = useRouter();
@@ -36,7 +37,9 @@ export default function UpdateCompany({ company } : CompanyDashboardProps) {
         const data = {
             name: formData.get("name") as string,
             description: formData.get("description") as string,
-            serviceType: formData.get("serviceType") as string
+            serviceType: formData.get("serviceType") as string,
+            instagramUrl: formData.get("instagramUrl") as string,
+            websiteUrl: formData.get("websiteUrl") as string
         }
 
         try{
@@ -65,36 +68,21 @@ export default function UpdateCompany({ company } : CompanyDashboardProps) {
         setFormData({
             name: company.name,
             description: company.description,
-            serviceType: company.serviceType
+            serviceType: company.serviceType,
+            instagramUrl: company.instagramUrl || "",
+            websiteUrl: company.websiteUrl || ""
         });
         setIsEditing(false);
     }
 
 
     return(
-        <div className="px-4 sm:px-6 lg:px-8 w-full max-w-xl mx-auto mt-10">
+        <div className="px-4 sm:px-6 lg:px-8 w-full max-w-xl mx-auto mt-10 mb-10">
             <div className='w-full max-w-xl mx-auto flex flex-col items-center'>
                 <h1 className="text-white text-4xl font-bold mb-2 text-center">Your company</h1>
                 <p className="text-textgray mt-4 mb-6">Here you can check out and update your companies info if you want.</p>
 
-                <input 
-                type="file"
-                accept='image/*'
-                onChange={async (e) => {
-                    const file = e.target.files?.[0];
-                    if(!file) return;
-
-                    const formData = new FormData();
-                    formData.append("file", file);
-                    formData.append("companyId", company.id)
-
-                    await fetch("/api/company/upload-logo", {
-                        method: "POST",
-                        headers: { "ContentType" : "application/json" },
-                        body: formData
-                    })
-                }} 
-            />
+                <ImageUpload companyId={company.id} currentImageUrl={company.imageUrl}/>
 
                 <form 
                     onSubmit={handleSubmit}
@@ -169,6 +157,40 @@ export default function UpdateCompany({ company } : CompanyDashboardProps) {
                         </select>
                     ) : (
                         <p className="text-white">Company Service Type: <span className="text-textgray">{company.serviceType}</span></p>
+                    )}
+
+                    {isEditing ? (
+                        <input 
+                            type="text"
+                            id="instagramUrl"
+                            name="instagramUrl"
+                            value={formData.instagramUrl}
+                            onChange={(e) => setFormData({
+                                ...formData,
+                                instagramUrl: e.target.value
+                            })}
+                            disabled={loading}
+                            className="border border-inputcolor w-full mx-auto px-4 py-2 rounded focus:outline-none focus:border-2 focus:border-foreground text-textgray"
+                        />
+                    ) : (
+                        <p className="text-white">Company Instagram: <span className="text-textgray">{company.instagramUrl}</span></p>
+                    )}
+
+                    {isEditing ? (
+                        <input 
+                            type="text"
+                            id="websiteUrl"
+                            name="websiteUrl"
+                            value={formData.websiteUrl}
+                            onChange={(e) => setFormData({
+                                ...formData,
+                                websiteUrl: e.target.value
+                            })}
+                            disabled={loading}
+                            className="border border-inputcolor w-full mx-auto px-4 py-2 rounded focus:outline-none focus:border-2 focus:border-foreground text-textgray"
+                        />
+                    ) : (
+                        <p className="text-white">Company website: <span className="text-textgray">{company.websiteUrl}</span></p>
                     )}
 
                     <p className="text-white text-sm">Your site URL: <span className="text-textgray">https://www.appointify.com/search/{company.slug}</span></p>

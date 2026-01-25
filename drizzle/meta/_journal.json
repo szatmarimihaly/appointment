@@ -99,6 +99,48 @@
       "when": 1769021285550,
       "tag": "0013_sloppy_mordo",
       "breakpoints": true
+    },
+    {
+      "idx": 14,
+      "version": "7",
+      "when": 1769026755892,
+      "tag": "0014_fat_miss_america",
+      "breakpoints": true
+    },
+    {
+      "idx": 15,
+      "version": "7",
+      "when": 1769090903654,
+      "tag": "0015_giant_captain_stacy",
+      "breakpoints": true
+    },
+    {
+      "idx": 16,
+      "version": "7",
+      "when": 1769115035702,
+      "tag": "0016_solid_shotgun",
+      "breakpoints": true
+    },
+    {
+      "idx": 17,
+      "version": "7",
+      "when": 1769262645974,
+      "tag": "0017_lumpy_cerebro",
+      "breakpoints": true
+    },
+    {
+      "idx": 18,
+      "version": "7",
+      "when": 1769325806033,
+      "tag": "0018_peaceful_blizzard",
+      "breakpoints": true
+    },
+    {
+      "idx": 19,
+      "version": "7",
+      "when": 1769350539446,
+      "tag": "0019_minor_ogun",
+      "breakpoints": true
     }
   ]
 }

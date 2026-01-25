@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import SpinnerWhite from "../ui/SpinnerWhite";
-import { DEVIZA_TYPES } from "@/constants/serviceTypes";
+import { DEVIZA_TYPES, DURATION_TYPES } from "@/constants/serviceTypes";
 import { useRouter } from "next/navigation";
 
 
@@ -24,7 +24,8 @@ export default function AddServices() {
                 name: formData.get("name") as string,
                 description: formData.get("description") as string,
                 price: formData.get("price") as string,
-                deviza: formData.get("deviza") as string 
+                deviza: formData.get("deviza") as string,
+                duration: formData.get("duration") as string
             }
             const response = await fetch("/api/company/create-services", {
                 method:"POST",
@@ -111,6 +112,14 @@ export default function AddServices() {
                     <select name="deviza" id="deviza" required>
                         {DEVIZA_TYPES.map((deviza) => (
                             <option key={deviza} value={deviza}>{deviza}</option>
+                        ))}
+                    </select>
+                )}
+
+                {isEditing && (
+                    <select name="duration" id="duration" required>
+                        {DURATION_TYPES.map((duration) => (
+                            <option key={duration} value={duration}>{duration} minutes</option>
                         ))}
                     </select>
                 )}
