@@ -50,7 +50,7 @@ export default function UpdateCompany({ company } : CompanyDashboardProps) {
             city: formData.get("city") as string,
             zipCode: formData.get("zipCode") as string,
             address: formData.get("address") as string, // Added this
-            number: formData.get("number") as string,
+            number: Number(formData.get("number") as string),
             alphabet: formData.get("alphabet") as string || "",
             phone: formData.get("phone") as string || ""
         }
@@ -344,7 +344,7 @@ export default function UpdateCompany({ company } : CompanyDashboardProps) {
                                 value={formData.number}
                                 onChange={(e) => setFormData({
                                     ...formData,
-                                    number: e.target.value
+                                    number: Number(e.target.value)
                                 })}
                                 required
                                 disabled={loading}
