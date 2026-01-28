@@ -1,1 +1,0 @@
-DROP TABLE "weekly_working_hours" CASCADE;

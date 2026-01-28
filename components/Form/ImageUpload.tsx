@@ -67,10 +67,15 @@ export default function LogoUpload({ companyId, currentImageUrl }: LogoUploadPro
             }
 
             const data = await response.json();
-            setPreviewUrl(data.imageUrl);
             
-            // Refresh the page to show updated logo everywhere
-            router.refresh();
+            // Force image reload by adding timestamp
+            const newImageUrl = data.imageUrl + (data.imageUrl.includes('?') ? '&' : '?') + 'v=' + Date.now();
+            setPreviewUrl(newImageUrl);
+            
+            // Small delay to ensure state updates before refresh
+            setTimeout(() => {
+                router.refresh();
+            }, 100);
 
         } catch (err: any) {
             setError(err.message || "Failed to upload logo");
@@ -101,6 +106,7 @@ export default function LogoUpload({ companyId, currentImageUrl }: LogoUploadPro
                             src={previewUrl}
                             alt="Company logo"
                             className="w-full h-full object-cover rounded-lg border-2 border-inputcolor"
+                            key={previewUrl} // Force re-render when URL changes
                         />
                         {!loading && (
                             <button

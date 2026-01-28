@@ -1,1 +1,0 @@
-ALTER TABLE "company" ADD CONSTRAINT "company_slug_unique" UNIQUE("slug");

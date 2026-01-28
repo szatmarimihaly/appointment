@@ -2,7 +2,6 @@ import { db } from "@/db";
 import { company, services } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import type { Company, Services } from "@/constants/Interfaces";
-import { unstable_cache, cacheTag } from "next/cache";
 
 export async function getCompanyDetail(slug : string) : Promise<Company | null>{ 
 

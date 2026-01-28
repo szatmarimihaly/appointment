@@ -20,9 +20,9 @@ export async function POST(req: Request) {
         }
 
         const body = await req.json();
-        const { name, description, serviceType, instagramUrl, websiteUrl } = body;
+        const { name, description, serviceType, instagramUrl, websiteUrl, country, city, zipCode, address, number, alphabet, phone } = body;
 
-        if(!name || !description || !serviceType) {
+        if(!name || !description || !serviceType || !country || !city || !zipCode || !address || !number || !alphabet || !phone) {
             return NextResponse.json(
                 { error : "All filds are required." },
                 { status : 400 }
@@ -40,26 +40,10 @@ export async function POST(req: Request) {
             );
         }
 
-        const slug = slugify(name);
         const nameSearch = searchify(name);
         const serviceTypeSearch = searchify(serviceType);
-
-        if (slug !== existingCompany.slug) {
-            const slugConflict = await db.query.company.findFirst({
-                where: and(
-                    eq(company.slug, slug),
-                    ne(company.id, existingCompany.id)
-                ),
-            });
-
-            if (slugConflict) {
-                return NextResponse.json(
-                    { error: "A company with this name already exists" },
-                    { status: 400 }
-                );
-            }
-        }
-
+        const houseNumber = parseInt(number);
+        
         const updateCompany = await db.update(company).set({
             name: name,
             nameSearch: nameSearch, 
@@ -68,7 +52,13 @@ export async function POST(req: Request) {
             serviceTypeSearch: serviceTypeSearch,
             updatedAt : new Date(),
             instagramUrl: instagramUrl || null,
-            websiteUrl: websiteUrl || null
+            websiteUrl: websiteUrl || null,
+            city: city,
+            zipCode: zipCode,
+            address: address,
+            number: houseNumber,
+            alphabet: alphabet,
+            phone: phone
         }).where(eq(company.ownerId, currentUser.id)).returning();
 
 

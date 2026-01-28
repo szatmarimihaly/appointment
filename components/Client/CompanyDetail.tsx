@@ -1,13 +1,13 @@
 import { CompanyDetailProps, Services } from "@/constants/Interfaces";
 import Image from "next/image";
-import Phone from "../ui/Phone";
-import Instagram from "../ui/Instagram";
 import Address from "../ui/Address";
 import { getServicesForCompanies } from "@/lib/query/detailView/getCompanyServices";
 import ServiceCard from "./ServiceCard";
 import Link from "next/link";
-import { InstagramIcon } from "lucide-react";
-import { Globe } from "lucide-react";
+import { GlobeIcon } from "../ui/GlobeIcon";
+import { InstagramLucide } from "../ui/InstagramLucide";
+import PhoneIcon from "../ui/PhoneIcon";
+
 
 export default async function CompanyDetail({ name, description, serviceType, rating, imageUrl, country, city, zipCode, address, number, alphabet, phone, slug, instagramUrl, websiteUrl } : CompanyDetailProps){
 
@@ -39,7 +39,7 @@ export default async function CompanyDetail({ name, description, serviceType, ra
                     <p className="text-textgray text-sm">{description}</p>
                     <button className="bg-foreground text-white px-6 py-2 mt-10">Book an appointment</button>
                     <div className="flex flex-col items-start text-white mt-10 gap-4">
-                        <p className="flex items-center gap-2 transition-all duration-300 hover:text-blue-300"><Phone/><a href={`tel:${phone}`}>{phone}</a></p>
+                        <p className="flex items-center gap-2 transition-all duration-300 hover:text-blue-300"><PhoneIcon/><a href={`tel:${phone}`}>{phone}</a></p>
                         <p className="flex items-center gap-2 transition-all duration-300 hover:text-blue-300">
                             <Address/>
                             <a 
@@ -52,12 +52,12 @@ export default async function CompanyDetail({ name, description, serviceType, ra
                         <div className="flex items-center gap-2">
                             {instagramUrl?.length && (
                                 <Link href={instagramUrl} target="_blank" className="flex items-center gap-2 transition-all duration-300 hover:text-blue-300">
-                                    <InstagramIcon/>
+                                    <InstagramLucide/>
                                 </Link>
                             )}
                             {websiteUrl?.length && (
                                 <Link href={websiteUrl} target="_blank" className="flex items-center gap-2 transition-all duration-300 hover:text-blue-300">
-                                    <Globe/>
+                                    <GlobeIcon/>
                                 </Link>
                             )}
                         </div>

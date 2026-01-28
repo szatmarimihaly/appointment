@@ -1,1 +1,0 @@
-ALTER TABLE "company" ALTER COLUMN "slug" DROP NOT NULL;

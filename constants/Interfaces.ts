@@ -13,7 +13,7 @@ export interface Company {
   city : string;
   zipCode : string;
   address : string;
-  number : string;
+  number : number;
   alphabet : string;
   phone : string;
   createdAt: Date;
@@ -49,7 +49,7 @@ export interface CompanySearchCardProps{
     zipCode: string,
     address: string,
     city: string,
-    number: string,
+    number: number,
     alphabet: string
 };
 
@@ -64,7 +64,7 @@ export interface CompanyDetailProps{
     city : string,
     zipCode : string,
     address : string,
-    number : string,
+    number : number,
     alphabet : string,
     phone : string,
     instagramUrl: string | null
