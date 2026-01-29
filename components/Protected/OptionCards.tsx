@@ -7,7 +7,7 @@ export default function OptionCards() {
             {AuthCards.map((card) => (
                 <Link
                 key={card.id}
-                className="bg-cardback p-6 rounded-lg border border-cardborder transition-all duration-300 hover:scale-105"
+                className="bg-slate-800/50 p-6 transition-all hover:bg-slate-800/70 rounded-xl"
                 href={`${card.href}`}
                 >
                     <h2 className="text-xl text-white">{card.title}</h2>

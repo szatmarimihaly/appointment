@@ -71,7 +71,7 @@ export async function POST(req: Request) {
             {
                 success : true,
                 message : "Service created successfully.",
-                service : newService[0]
+                //service : newService[0]
             },
             { status : 201 }
         );

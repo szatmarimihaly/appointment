@@ -1,3 +1,4 @@
+import NavigatePurple from "@/components/Button/NavigatePurple";
 import CompanyDetail from "@/components/Client/CompanyDetail";
 import SuspenseSpinner from "@/components/ui/Suspense/Spinner";
 import { getCompanyDetail } from "@/lib/query/search/detailView";
@@ -20,28 +21,36 @@ export default async function Page({ params } : CompanyDetail) {
 
     return(
 
-        <main>
-            <Suspense fallback={<SuspenseSpinner/>}>
-                <CompanyDetail
-                    key={company?.id}
-                    slug={company.slug}
-                    name={company?.name}
-                    description={company.description}
-                    serviceType={company.serviceType}
-                    rating={company.rating}
-                    imageUrl={company.imageUrl}
-                    country={company.country}
-                    city={company.city}
-                    zipCode={company.zipCode}
-                    address={company.address}
-                    number={company.number}
-                    alphabet={company.alphabet}
-                    phone={company.phone}
-                    instagramUrl={company.instagramUrl}
-                    websiteUrl={company.websiteUrl}
-                />
-            </Suspense>
-        </main>
+        <>
+        
+            <header className="p-6">
+                <NavigatePurple href="/search"/>
+            </header>
+
+            <main>
+                <Suspense fallback={<SuspenseSpinner/>}>
+                    <CompanyDetail
+                        key={company?.id}
+                        slug={company.slug}
+                        name={company?.name}
+                        description={company.description}
+                        serviceType={company.serviceType}
+                        rating={company.rating}
+                        imageUrl={company.imageUrl}
+                        country={company.country}
+                        city={company.city}
+                        zipCode={company.zipCode}
+                        address={company.address}
+                        number={company.number}
+                        alphabet={company.alphabet}
+                        phone={company.phone}
+                        instagramUrl={company.instagramUrl}
+                        websiteUrl={company.websiteUrl}
+                    />
+                </Suspense>
+            </main>
+
+        </>
 
 
     )

@@ -18,7 +18,7 @@ export default async function CompanyDetail({ name, description, serviceType, ra
     const mapsUrl = `https://www.google.com/search?api=1&query=${encodeURI(fullAddress)}`;
 
     return(
-        <div className="flex flex-col items-center my-20 mx-2 lg:mx-20 bg-clientcard py-10 px-2 rounded">
+        <div className="flex flex-col items-center my-20 mx-2 lg:mx-20 rounded">
             <div className="flex flex-col items-center lg:flex-row gap-20">
                 {imageUrl ? (
                     <div className="w-80 h-40 md:w-64 md:h-64 lg:w-200 lg:h-96 relative">

@@ -139,6 +139,7 @@ export default function AddServices() {
                             type="submit"
                             className="text-white px-4 py-2 rounded font-bold bg-foreground"
                             disabled={loading}
+                            onClick={() => setIsEditing(false)}
                         >
                             {loading ? <SpinnerWhite/> : "Create service"}
                         </button>

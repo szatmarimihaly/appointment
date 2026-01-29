@@ -1,0 +1,14 @@
+NAME | EMAIL | PASSWORD | BUSINESS NAME 
+
+Mihaly Szatmari    | szatmarr.mihalyy@gmail.com   | Masika20030404 | Elementworks                 | ✅
+Miska              | szatmarimihaly12@gmail.com   | Masika20030404 | Aurora Grid Solutions Kft.   | ✅
+Elementworks       | elementworkseu@gmail.com     | Masika20030404 | ProwebDesign                 | ✅
+Kiss Rita          | rita.kiss12@gmail.com        | Masika20030404 | Fodrász Szalon               | ✅
+Nagy Evelin        | nagyevelin1990@gmail.com     | Masika20030404 | Körmös Stúdió                | ✅
+Kristóf Németh     | nagykristof2000@gmail.com    | Masika20030404 | Fotós                        | ✅
+Kiss György Tamás  | kisgyorgytamas@gmail.com     | Masika20030404 | Personal Trainer             | ✅
+Tóth András        | toth.andras88@gmail.com      | Masika20030404 | András Barber Studio         | ❌
+Szabó Lilla        | szabo.lilla.dev@gmail.com    | Masika20030404 | Lilla Beauty Care            | ❌
+Varga Péter        | varga.peter.fit@gmail.com    | Masika20030404 | Peak Performance             | ❌
+Kovács Dóra        | kovacs.dora.yoga@gmail.com   | Masika20030404 | Flow Yoga Studio             | ❌
+Balogh Zoltán      | balogh.zoltan.tech@gmail.com | Masika20030404 | Zoltan Tech Solutions Kft.   | ❌

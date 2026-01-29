@@ -1,6 +1,12 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { Rubik } from "next/font/google"
+import { Arvo } from "next/font/google"
+
+const arvoFont = Arvo({
+  subsets: ["latin"],
+  weight: "400"
+})
 
 const rubikFont = Rubik({
   subsets: ["latin"],
@@ -17,7 +23,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${rubikFont.className}`}
+        className={`${arvoFont.className}`}
       >
         {children}
       </body>

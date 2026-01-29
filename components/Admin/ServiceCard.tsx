@@ -5,7 +5,6 @@ import Bin from "../ui/Bin";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import SpinnerWhite from "../ui/SpinnerWhite";
-import { dividerClasses } from "@mui/material";
 
 export default function ServiceCard({id, name, description, price, deviza, duration} : Services) {
 
@@ -56,7 +55,7 @@ export default function ServiceCard({id, name, description, price, deviza, durat
         <div className="bg-clientcard p-6 rounded">
             <div className="flex flex-col gap-2">
                 <div className="flex items-center justify-between mb-10">
-                    <h3 className="">{name}</h3>
+                    <h3 className="text-lg md:text-2xl">{name}</h3>
                     <button
                         onClick={handleDelete}
                         disabled={loading}
