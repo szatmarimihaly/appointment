@@ -1,0 +1,1 @@
+ALTER TABLE "company" ADD COLUMN "timezone" text DEFAULT 'Europe/Budapest';

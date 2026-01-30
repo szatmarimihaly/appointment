@@ -20,6 +20,7 @@ export interface Company {
   updatedAt: Date;
   instagramUrl: string | null;
   websiteUrl: string | null;
+  timezone: string | null;
 };
 
 export interface Services {

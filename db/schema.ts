@@ -92,7 +92,8 @@ export const company = pgTable("company", {
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().$onUpdate(() => new Date()).notNull(),
   instagramUrl: text("instagram_url"),
-  websiteUrl: text("website_url")
+  websiteUrl: text("website_url"),
+  timezone: text("timezone").default("Europe/Budapest")
 },
 (table) => [
   index("company_ownerId_idx").on(table.ownerId),

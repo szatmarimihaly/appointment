@@ -17,6 +17,8 @@ export const DURATION_TYPES = [
 export type DurationType = (typeof DURATION_TYPES)[number];
 
 export const COUNTRIES = [
-    "Magyarország", "Germany", "Slovakia"
+    "Magyarország", 
+    "Germany", 
+    "Slovakia"
 ] as const;
 export type CountryType = (typeof COUNTRIES)[number];

@@ -5,6 +5,7 @@ import { getCurrentUser } from "@/lib/query/getCurrentUser";
 import { eq, and, ne } from "drizzle-orm";
 import { slugify } from "@/utils/slugify";
 import { searchify } from "@/utils/searchify";
+import { getTimezoneForCountry, isValidCountry } from "@/utils/timezoneMapping";
 
 export async function POST(req: Request) {
 
@@ -29,6 +30,13 @@ export async function POST(req: Request) {
             )
         }
 
+        if(!isValidCountry) {
+            return NextResponse.json(
+                { error : "Invalid country selected." },
+                { status : 400 }
+            )
+        }
+
         const existingCompany = await db.query.company.findFirst({
             where: eq(company.ownerId, currentUser.id),
         });
@@ -43,6 +51,7 @@ export async function POST(req: Request) {
         const nameSearch = searchify(name);
         const serviceTypeSearch = searchify(serviceType);
         const houseNumber = parseInt(number);
+        const timezone = getTimezoneForCountry(country);
         
         const updateCompany = await db.update(company).set({
             name: name,
@@ -53,12 +62,14 @@ export async function POST(req: Request) {
             updatedAt : new Date(),
             instagramUrl: instagramUrl || null,
             websiteUrl: websiteUrl || null,
+            country: country,
             city: city,
             zipCode: zipCode,
             address: address,
             number: houseNumber,
             alphabet: alphabet,
-            phone: phone
+            phone: phone,
+            timezone: timezone
         }).where(eq(company.ownerId, currentUser.id)).returning();
 
 

@@ -15,6 +15,13 @@
       "when": 1769719889572,
       "tag": "0001_smart_genesis",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1769808820752,
+      "tag": "0002_lonely_lilith",
+      "breakpoints": true
     }
   ]
 }
