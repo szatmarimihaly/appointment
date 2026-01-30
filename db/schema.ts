@@ -1,5 +1,5 @@
 import { relations } from "drizzle-orm";
-import { pgTable, text, timestamp, boolean, index, doublePrecision, integer, uniqueIndex, check } from "drizzle-orm/pg-core";
+import { pgTable, text, timestamp, boolean, index, doublePrecision, integer, uniqueIndex, check, date } from "drizzle-orm/pg-core";
 import { sql } from "drizzle-orm";
 
 export const user = pgTable("user", {
@@ -119,6 +119,51 @@ export const services = pgTable("services", {
   index("services_companyOwner_idx").on(table.ownerCompanyId),
 ]
 );
+
+export const appointments = pgTable("appointments", {
+  id: text("id").primaryKey().notNull(),
+  companyId: text("company_id").notNull().references(() => company.id, { onDelete: "cascade" }),
+  serviceId: text("service_id").references(() => services.id, { onDelete: "set null" }),
+  date: date("date").notNull(),
+  startSlot: integer("start_slot").notNull(),
+  endSlot: integer("end_slot").notNull(),
+  status: text("status").notNull().default("pending"), // IT CAN ONLY BE: pending, booked, completed, cancelled
+  customerName: text("customer_name"),
+  customerEmail: text("customer_email"),
+  customerPhone: text("customer_phone"),
+  cancelToken: text("cancel_token").unique(),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+  updatedAt: timestamp("updated_at").notNull().defaultNow().$onUpdate(() => new Date()),
+},
+(table) => [
+  index("appointments_companyId_idx").on(table.companyId),
+  index("appointments_date_idx").on(table.date),
+  index("appointments_companyId_date_idx").on(table.companyId, table.date),
+  index("appointments_status_idx").on(table.status),
+  index("appointments_serviceId_idx").on(table.serviceId),
+  uniqueIndex("appointments_cancelToken_idx").on(table.cancelToken),
+
+  check("appointments_slot_bounds_check", 
+    sql`${table.startSlot} >= 0 AND ${table.endSlot} <= 144`
+  ),
+  check("appointments_start_before_end_check", 
+    sql`${table.startSlot} < ${table.endSlot}`
+  ),
+  check("appointments_status_check", 
+    sql`${table.status} IN ('pending', 'booked', 'completed', 'cancelled')`
+  )
+]);
+
+export const appointmentsRelations = relations(appointments, ({ one }) => ({
+  company: one(company, {
+    fields: [appointments.companyId],
+    references: [company.id]
+  }),
+  service: one(services, {
+    fields: [appointments.serviceId],
+    references: [services.id]
+  })
+}));
 
 export const companyRelations = relations(company, ({ one }) => ({
   owner: one(user, {
