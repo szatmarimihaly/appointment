@@ -20,34 +20,15 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
     const { date, startSlot, endSlot } = body;
 
-    if(!date || !startSlot || !endSlot){
+    if(!date || startSlot === undefined || endSlot === undefined){
         return NextResponse.json(
             { error : "Date, start time and end time are required." },
             { status : 400 }
         )
     }
 
-    const appointmentDate = new Date(date);
-    if(isNaN(appointmentDate.getTime())){
-        return NextResponse.json(
-            { error : "Invalid date format." },
-            { status : 400 }
-        )
-    }
-
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-
-    const tomorrow = new Date(today);
-    tomorrow.setDate(tomorrow.getDate() + 1);
-
-    appointmentDate.setHours(0, 0, 0, 0);
-
-    if(appointmentDate < tomorrow) {
-        return NextResponse.json(
-            { error : "Appointment date must be at least tomrrow or later." },
-            { status : 400 }
-        )
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) {
+        return NextResponse.json({ error: "Invalid date format" }, { status: 400 });
     }
 
     if(startSlot < 0 || endSlot > 144 || startSlot >= endSlot){
@@ -57,7 +38,7 @@ export async function POST(req: NextRequest) {
         )
     }
 
-    const dateStr = appointmentDate.toISOString().split("T")[0];
+    const dateStr = date;
 
     const overlapping = await db.query.appointments.findFirst({
         where: and(eq(appointments.companyId, company.id), eq(appointments.date, dateStr), or(

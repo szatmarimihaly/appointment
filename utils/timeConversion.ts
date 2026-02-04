@@ -13,23 +13,29 @@ export function slotToTime(slot: number): string {
 };
 
 export function getTomorrowDate(): string {
-    const tomorrow = new Date();
-    tomorrow.setDate(tomorrow.getDate() + 1);
-    return tomorrow.toISOString().split('T')[0];
-};
+  const d = new Date();
+  d.setDate(d.getDate() + 1);
+
+  const year = d.getFullYear();
+  const month = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+
+  return `${year}-${month}-${day}`;
+}
 
 export function getTodayDate(): string{
     const today = new Date();
     return today.toISOString().split("T")[0];
 };
 
-export function formatDate(dateString: string): string{
-    const date = new Date(dateString);
-    const options: Intl.DateTimeFormatOptions = {
-        weekday: "long",
-        year: "numeric",
-        month: "long",
-        day: "numeric"
-    };
-    return date.toLocaleDateString("hu-HU", options);
-}; 
+export function formatDate(dateString: string): string {
+  const [y, m, d] = dateString.split("-").map(Number);
+  const date = new Date(y, m - 1, d); // local-safe
+
+  return date.toLocaleDateString("hu-HU", {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+}

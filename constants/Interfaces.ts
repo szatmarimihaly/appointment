@@ -23,6 +23,14 @@ export interface Company {
   timezone: string | null;
 };
 
+export interface Appointment {
+    id: string,
+    date: string,
+    startSlot: number,
+    endSlot: number,
+    status: "pending" | "booked" | "completed" | "cancelled"
+}
+
 export interface Services {
     id: string,
     name: string,

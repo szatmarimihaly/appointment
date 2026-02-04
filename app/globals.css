@@ -6,6 +6,10 @@
     color: #818cf8;
     text-shadow: 0 0 10px #818cf8;
   }
+
+  .select-state{
+    @apply bg-background text-textgray;
+  }
 }
 
 :root {
